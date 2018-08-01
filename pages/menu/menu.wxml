@@ -1,0 +1,88 @@
+<view class="detail">
+  <view class="content">
+
+    <view class="menu-container">
+      <scroll-view scroll-y="true" class="scroll-view" scroll-into-view="head-{{indexSize}}">
+        <view class="scroll-view-ul">
+          <block wx:for="{{menu}}" wx:for-item="item" wx:key="index" id="head-{{index}}">
+            <view class="scroll-view-item {{indexSize === index?'active':''}}" bindtap="scrollTo" data-index="{{index}}">{{item.typeName}}</view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+
+
+    <swiper indicator-dots='true' class="detail-container" bindchange="change" data-index="{{index}}" current="{{indexSize}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" duration="{{duration}}">
+      <swiper-item wx:for="{{menu}}" wx:for-item="item" wx:key="index">
+        <scroll-view scroll-y="true" class=" market-scroll-list">
+
+          <view class="title">{{menu[indexSize].typeName}} </view>
+          <a wx:for="{{menu[indexSize].menuContent}}" wx:key="index" item="item" key="key">
+            <!-- single item view -->
+            <view class="inner">
+              <!-- cover item -->
+              <view class="cover" bindtap="powerDrawer" data-statu="open" data-category="{{indexSize}}" data-index="{{index}}">
+                <image class="cover-img" mode="scaleToFill" src="{{item.src}}"></image>
+              </view>
+              <!-- description item -->
+              <view class="info overflow">
+                <view class="info-title overflow">{{item.name}}</view>
+                <view class="info-desc overflow">descdescdescdesc{{item.desc?'暂无':item.desc}}</view>
+                <view class="info-price overflow">￥{{item.price}}</view>
+              </view>
+              <!-- <view class="add-shoppingCart">
+                <view class="text">添加</view> -->
+              <view class="food-numb">
+                <view class="remove" bindtap="removeFromTrolley" hidden="{{item.numb==0}}" data-index="{{index}}">-</view>
+                <text class="text" hidden="{{item.numb==0}}">{{item.numb}}</text>
+                <view class="add" bindtap="addToTrolley" data-index="{{index}}">+</view>
+              </view>
+              <!-- </view> -->
+            </view>
+
+          </a>
+
+        </scroll-view>
+      </swiper-item>
+
+    </swiper>
+
+  </view>
+</view>
+
+<!-- footer -->
+<view class="footer {{cost!=0?'active':''}}">
+  <view class="shoppingCart">
+    <view type="default" bindtap="showModal">购物车</view>
+  </view>
+  <view class="cost">￥{{cost}}</view>
+  <view class="pay">{{cost!=0?'去结算':'15元起送'}}</view>
+</view>
+
+
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<!--content-->
+<!--使用animation属性指定需要执行的动画-->
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+
+  <!--drawer content-->
+  <view class="drawer_title">{{modalItem.name}}</view>
+  <view class="drawer_content">
+    <image class="model_image" mode="scaleToFill" src="{{modalItem.src}}"></image>
+    <view class="modal_desc">简短的描述，可以自动换行{{modalItem.desc}}简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行</view>
+  </view>
+  <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view>
+</view>
+
+<!-- 购物车 -->
+<view class="commodity_screen" bindtap="hideModal" wx:if="{{showBottomModalStatus}}"></view>
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showBottomModalStatus}}">
+  <view wx:for="{{shoppingCart}}" wx:key="index" item="item" key="key">
+    <view class="shoppingCart_inner">
+      <view class="overflow">{{item.name}}</view>
+      <view class="overflow">数量：{{item.numb}}</view>
+      <view class="overflow">合计：￥{{item.price * item.numb}}</view>
+    </view>
+  </view>
+</view>

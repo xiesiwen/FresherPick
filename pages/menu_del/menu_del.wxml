@@ -1,0 +1,56 @@
+<view class="detail">
+  <view class="content">
+    <view class="menu-container">
+      <scroll-view scroll-y="true" class="scroll-view-menu" scroll-into-view="head-{{indexSize}}">
+        <view class="scroll-view-ul">
+          <block wx:for="{{menu}}" wx:for-item="item" wx:key="index" id="head-{{index}}">
+            <view class="scroll-view-item {{indexSize === index? 'active':''}}" bindtap='scrollTo' data-index="{{index}}">{{item.typeName}}</view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+
+
+    <swiper indicator-dots='true' class="detail-container" bindchange="change" data-index="{{index}}" current="{{indexSize}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" duration="{{duration}}">
+      <swiper-item wx:for="{{menu}}" wx:for-item="item" wx:key="index">
+        <scroll-view scroll-y="true" class="market-scroll-list">
+          <!-- menu type name -->
+          <view class="title">{{menu[indexSize].typeName}}</view>
+
+          <a wx:for="{{menu[indexSize].menuContent}}" wx:key="index" item="item" key="key">
+            <!-- single item view -->
+            <view class="inner">
+              <!-- cover item -->
+              <view class="cover">
+                <view class="cover-img">
+                  <!-- <image mode="aspectFit" src="{{item.src}}"></image> -->
+                </view>
+              </view>
+              <!-- description item -->
+              <view class="info overflow">
+                <view class="info-title overflow">{{item.name}}</view>
+                <view class="info-desc overflow">desc</view>
+                <view class="info-price overflow">{{item.price}}</view>
+              </view>
+              <view class="add-shoppingCart">
+                <view class="text">添加</view>
+              </view>
+            </view>
+          </a>
+
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+
+  </view>
+
+  <!-- footer -->
+  <view class="footer {{cost!=0?'active':''}}">
+    <view class="shoppingCart">
+      <view type="default">购物车</view>
+    </view>
+    <view class="cost">￥{{cost}}</view>
+    <view class="pay">{{cost!=0?'去结算':'15元起送'}}</view>
+  </view>
+
+</view>

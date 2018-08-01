@@ -1,0 +1,32 @@
+{
+  "pages":[
+    "pages/menu/menu",
+    "pages/my/my"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "在线下单",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar":{
+    "backgroundColor": "",
+    "color": "#000000",
+    "selectedColor": "#FF0000",
+    "position": "bottom",
+    "borderStyle": "black",
+    "list":[{
+      "pagePath": "pages/menu/menu",
+      "text": "下单"
+    },
+    {
+      "pagePath": "pages/my/my",
+      "text": "我的"
+    }]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

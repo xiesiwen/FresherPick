@@ -1,0 +1,430 @@
+.detail {
+  margin-bottom: 100rpx;
+  bottom: 100rpx;
+}
+
+.overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  bottom: 0rpx;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.menu-container {
+  width: 160rpx;
+  flex: 0 0 160rpx;
+  background: #f6f6f6;
+}
+
+.detail-container {
+  flex: 1;
+  height: 100%;
+}
+
+.scroll-view {
+  width: 100%;
+  height: 90%;
+}
+
+.scroll-view-ul {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-view-item {
+  height: 110rpx;
+  width: 100%;
+  font-size: 24rpx;
+  color: #666;
+  border-left: 8rpx solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.scroll-view-item:after {
+  content: '';
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #dfdfdf;
+  transform: scaleY(0.5);
+  position: absolute;
+}
+
+.active {
+  background: #fff;
+  color: rgba(254,62,98, 0.8);
+  border-left: 8rpx solid rgba(254,62,98, 0.8);
+}
+
+.market-scroll-list {
+  height: 100%;
+}
+
+.title {
+  height: 55rpx;
+  background-color: #f6f6f6;
+  border-left: 6rpx solid #dfdfdf;
+  padding-left: 25rpx;
+  line-height: 55rpx;
+}
+
+.inner {
+  display: flex;
+  padding: 30rpx;
+  position: relative;
+}
+
+.inner:after {
+  content: '';
+  left: 30rpx;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #dfdfdf;
+  transform: scaleY(0.5);
+  position: absolute;
+}
+
+.cover {
+  width: 100rpx;
+  height: 100rpx;
+  border: 1px solid #dfdfdf;
+  background: #f6f6f6;
+  padding: 20rpx;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+  background-color: greenyellow;
+}
+
+.info {
+  flex: 1;
+  padding: 0 30rpx;
+  font-size: 0;
+}
+
+.info-title {
+  color: #333;
+  font-size: 26rpx;
+}
+
+.info-subtitle {
+  color: #999;
+  font-size: 20rpx;
+  margin-top: -3rpx;
+}
+
+.info-desc {
+  color: #666;
+  font-size: 22rpx;
+  margin-top: 5rpx;
+}
+
+.info-price {
+  color: #999;
+  font-size: 20rpx;
+  margin-top: -3rpx;
+}
+
+.add-shoppingCart {
+  margin-top: 80rpx;
+  width: 120rpx;
+  position: relative;
+  background-color: #333;
+}
+
+.food-numb {
+  height: 40rpx;
+  width: 130rpx;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 95rpx;
+  margin-right: 30rpx;
+  line-height: 40rpx;
+  font-size: 25rpx;
+}
+
+.food-numb .add, .food-numb .remove {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 30rpx;
+  text-align: center;
+}
+
+.food-numb .add {
+  font-size: 35rpx;
+  line-height: 37rpx;
+  font-weight: 700;
+  background: rgba(254,62,98, 0.8);
+  margin-left: 15rpx;
+}
+
+.food-numb .remove {
+  margin-right: 15rpx;
+  line-height: 28rpx;
+  font-size: 60rpx;
+  font-weight: 500;
+  box-sizing: border-box;
+  border: 2rpx;
+  border-style: solid;
+  border-color: #b0b0b0;
+  color: #b0b0b0;
+}
+
+.text {
+  position: center;
+  bottom: 0;
+  font-size: 22rpx;
+  color: #666;
+}
+
+.footer {
+  /* border-style: solid; */
+  display: flex;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100rpx;
+  background-color: rgba(240, 237, 237, 1);
+}
+
+.footer .img {
+  position: absolute;
+  height: 90rpx;
+  width: 90rpx;
+  border-radius: 100rpx;
+  left: 20rpx;
+  top: -45rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer .shoppingCart {
+  width: 40%;
+  text-align: center;
+  line-height: 100rpx;
+  /* color: white; */
+  font-size: 30rpx;
+  background: rgba(240, 237, 237, 0.566);
+}
+
+.footer .cost {
+  width: 30%;
+  text-align: center;
+  line-height: 100rpx;
+  /* color: white; */
+  font-size: 30rpx;
+  /* background: #CCCCCC; */
+}
+
+.footer .pay {
+  width: 30%;
+  text-align: center;
+  line-height: 100rpx;
+  /* color: white; */
+  font-size: 30rpx;
+  /* background: #CCCCCC; */
+}
+
+/* 模态框的css */
+
+/* .btn {
+  width: 80%;
+  padding: 20rpx 0;
+  border-radius: 10rpx;
+  text-align: center;
+  margin: 40rpx 10%;
+  background: #000;
+  color: #fff;
+} */
+
+/* mask */
+
+.drawer_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+/*content*/
+
+.drawer_box {
+  width: 650rpx;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 1001;
+  background: #fafafa;
+  margin: -150px 50rpx 0 50rpx;
+  border-radius: 3px;
+}
+
+.drawer_title {
+  padding: 15rpx;
+  font: 20px "microsoft yahei";
+  text-align: center;
+}
+
+.drawer_content {
+  height: 650rpx;
+  overflow-y: scroll; /*超出父盒子高度可滚动*/
+}
+
+.btn_ok {
+  padding: 10px;
+  font: 20px "microsoft yahei";
+  text-align: center;
+  border-top: 1px solid #e8e8ea;
+  color: #3cc51f;
+}
+
+.top {
+  padding-top: 8px;
+}
+
+.bottom {
+  padding-bottom: 8px;
+}
+
+.modal_title {
+  height: 30px;
+  line-height: 30px;
+  width: 160rpx;
+  text-align: center;
+  display: inline-block;
+  font: 300 28rpx/30px "microsoft yahei";
+}
+
+/* 这是详细描述的样式 */
+.modal_desc{
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font: 300 28rpx/30px "microsoft yahei";
+}
+
+.input_base {
+  border: 2rpx solid #ccc;
+  padding-left: 10rpx;
+  margin-right: 50rpx;
+}
+
+.input_h30 {
+  height: 30px;
+  line-height: 30px;
+}
+
+.input_h60 {
+  height: 60px;
+}
+
+.input_view {
+  font: 12px "microsoft yahei";
+  background: #fff;
+  color: #000;
+  line-height: 30px;
+}
+
+input {
+  font: 12px "microsoft yahei";
+  background: #fff;
+  color: #000;
+}
+
+radio {
+  margin-right: 20px;
+}
+
+.grid {
+  display: -webkit-box;
+  display: box;
+}
+
+.col-0 {
+  -webkit-box-flex: 0;
+  box-flex: 0;
+}
+
+.col-1 {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+/* 底部的模态框 */
+.commodity_screen {
+  width: 100%;
+  /* height: 100%; */
+  min-height: 0rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* opacity: 0.0; */
+  overflow: hidden;
+  z-index: 1000;
+  bottom: 100rpx;
+}
+
+.commodity_attr_box {
+  min-height: 0rpx;
+  width: 100%;
+  max-height: 400rpx;
+  position: fixed;
+  bottom: 100rpx;
+  left: 0;
+  z-index: 2000;
+  background: rgb(240, 237, 237);
+  /* padding-top: 20rpx; */
+  overflow-y: scroll; /*超出父盒子高度可滚动*/
+  overflow-x: hidden;
+}
+
+.shoppingCart_inner{
+  /* color: #fe3e62; */
+  color: rgba(254,62,98, 0.8);
+  display: flex;
+  padding: 30rpx;
+  padding-left: 50rpx;
+  position: relative;
+  font-size: 26rpx;
+  font-weight: 500;
+  border: 1px solid #dfdfdf;
+  border-left: 0rpx;
+  border-radius: 5px;
+  left:10rpx;
+}
+

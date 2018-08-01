@@ -1,0 +1,168 @@
+.detail {
+  /* margin-bottom: 100rpx;
+  bottom: 100rpx;*/
+  height: 100%;
+  background: rgb(102, 102, 102);
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  bottom: 0rpx;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.menu-container {
+  width: 160rpx;
+  flex: 0 0 160rpx;
+  /* background: #f6f6f6; */
+  background: #f6f6f6;
+  height: 100%;
+}
+
+.scroll-view-menu {
+  width: 100%;
+  height: 90%;
+}
+
+.scroll-view-ul {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-view-item {
+  height: 110rpx;
+  width: 100%;
+  font-size: 24rpx;
+  color: #666;
+  border-left: 8px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.scroll-view-item::after {
+  content: '';
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #dfdfdf;
+  transform: scaleY(0.5);
+  position: absolute;
+}
+
+.active {
+  background: #fff;
+  color: #fe3e62;
+  border-left: 8rpx solid #fe3e62;
+}
+
+.overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.market-scroll-list {
+  height: 100%;
+}
+
+.title {
+  margin-left: 160rpx;
+  height: 55rpx;
+  background-color: #f6f6f6;
+  border-left: 6rpx solid #dfdfdf;
+  padding-left: 25rpx;
+  line-height: 55rpx;
+}
+
+.detail-container{
+  background: #07df85;
+}
+/* .inner {
+  display: flex;
+  padding: 30rpx;
+  position: relative;
+}
+
+.inner:after {
+  content: '';
+  left: 30rpx;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #dfdfdf;
+  transform: scaleY(0.5);
+  position: absolute;
+}
+
+.cover {
+  width: 100rpx;
+  height: 100rpx;
+  border: 1px solid #dfdfdf;
+  background: #f6f6f6;
+  padding: 20rpx;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+  background-color: red;
+} */
+
+
+.footer {
+  /* border-style: solid; */
+  display: flex;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100rpx;
+  background-color: rgba(240, 237, 237, 1);
+}
+
+.footer .img {
+  position: absolute;
+  height: 90rpx;
+  width: 90rpx;
+  border-radius: 100rpx;
+  left: 20rpx;
+  top: -45rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer .shoppingCart {
+  width: 40%;
+  text-align: center;
+  line-height: 100rpx;
+  /* color: white; */
+  font-size: 30rpx;
+  background: rgba(240, 237, 237, 0.566);
+}
+
+.footer .cost {
+  width: 30%;
+  text-align: center;
+  line-height: 100rpx;
+  /* color: white; */
+  font-size: 30rpx;
+  /* background: #CCCCCC; */
+}
+
+.footer .pay {
+  width: 30%;
+  text-align: center;
+  line-height: 100rpx;
+  /* color: white; */
+  font-size: 30rpx;
+  /* background: #CCCCCC; */
+}
