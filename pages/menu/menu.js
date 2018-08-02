@@ -7,19 +7,22 @@ Page({
   data: {
     // 因为这是用 menu 来做的测试，所以最后肯定需要修改关于menu的所有js代码。在这里注明。
     showModalStatus: false, //模态框的开关
+    showModalStatus_clear: false, //结算页面模态框开关
     showBottomModalStatus: false,
     indexSize: 0, //这是当前选择的分组的index，命名有问题
     indicatorDots: false,
     autoplay: false,
     duration: 0, //可以控制动画
     menu: [],
-    animationData: '',    
+    animationData: '',
     list: '',
     modalItem: {}, //模态框显示的内容
     currentPage: 0,
     selected: 0,
     howMuch: 12, //没有用到
-    cost: 0, //购物车本次花费的钱
+    cost: 0, //购物车本次花费的钱;
+    freightCharge: 5, //运费;是不是有数据库送
+    discounts: 0.9, //折扣价
     shoppingCart: [] //加入购物车的物品;需要记录物品的Id
   },
   shoppingCart: [], //购物车 name/num/price
@@ -80,7 +83,7 @@ Page({
       }
       if (flag == 0) {
         shoppingCartInfo[index].numb--;
-        if (shoppingCartInfo[index].numb == 0){
+        if (shoppingCartInfo[index].numb == 0) {
           shoppingCartInfo.splice(index, 1); //删除index位置的1个元素
         }
       }
@@ -170,6 +173,15 @@ Page({
     }
     this.util(currentStatu)
   },
+  powerDrawer_clear: function(e) {
+    var info = this.data;
+    if (info.cost <= 0) {
+      return;
+    } else {
+      var currentStatu = e.currentTarget.dataset.statu;
+      this.util_clear(currentStatu);
+    }
+  },
   util: function(currentStatu) {
     /* 动画部分 */
     // 第1步：创建动画实例 
@@ -202,7 +214,7 @@ Page({
       //关闭
       if (currentStatu == "close") {
         this.setData({
-          showModalStatus: false
+          showModalStatus: false,
         });
       }
     }.bind(this), 200)
@@ -210,11 +222,55 @@ Page({
     // 显示
     if (currentStatu == "open") {
       this.setData({
-        showModalStatus: true
+        showModalStatus: true,
       });
     }
   },
-  showModal: function () {
+  util_clear: function (currentStatu) {
+    /* 动画部分 */
+    // 第1步：创建动画实例 
+    var animation = wx.createAnimation({
+      duration: 200, //动画时长
+      timingFunction: "linear", //线性
+      delay: 0 //0则不延迟
+    });
+
+    // 第2步：这个动画实例赋给当前的动画实例
+    this.animation = animation;
+
+    // 第3步：执行第一组动画
+    animation.opacity(0).rotateX(-100).step();
+
+    // 第4步：导出动画对象赋给数据对象储存
+    this.setData({
+      animationData: animation.export()
+    })
+
+    // 第5步：设置定时器到指定时候后，执行第二组动画
+    setTimeout(function () {
+      // 执行第二组动画
+      animation.opacity(1).rotateX(0).step();
+      // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象
+      this.setData({
+        animationData: animation
+      })
+
+      //关闭
+      if (currentStatu == "close") {
+        this.setData({
+          showModalStatus_clear: false
+        });
+      }
+    }.bind(this), 200)
+
+    // 显示
+    if (currentStatu == "open") {
+      this.setData({
+        showModalStatus_clear: true
+      });
+    }
+  },
+  showModal: function() {
     // 显示遮罩层
     var animation = wx.createAnimation({
       duration: 0,
@@ -227,14 +283,14 @@ Page({
       animationData: animation.export(),
       showBottomModalStatus: true
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export()
       })
     }.bind(this), 200)
   },
-  hideModal: function () {
+  hideModal: function() {
     // 隐藏遮罩层
     var animation = wx.createAnimation({
       duration: 0,
@@ -246,7 +302,7 @@ Page({
     this.setData({
       animationData: animation.export(),
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export(),

@@ -56,10 +56,10 @@
     <view type="default" bindtap="showModal">购物车</view>
   </view>
   <view class="cost">￥{{cost}}</view>
-  <view class="pay">{{cost!=0?'去结算':'15元起送'}}</view>
+  <view class="pay" bindtap='powerDrawer_clear' data-statu="open">{{cost!=0?'去结算':'15元起送'}}</view>
 </view>
 
-
+<!--  物品详情模态框-->
 <!--mask-->
 <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
 <!--content-->
@@ -75,7 +75,8 @@
   <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view>
 </view>
 
-<!-- 购物车 -->
+
+<!-- 购物车模态框 -->
 <view class="commodity_screen" bindtap="hideModal" wx:if="{{showBottomModalStatus}}"></view>
 <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showBottomModalStatus}}">
   <view wx:for="{{shoppingCart}}" wx:key="index" item="item" key="key">
@@ -85,4 +86,41 @@
       <view class="overflow">合计：￥{{item.price * item.numb}}</view>
     </view>
   </view>
+</view>
+
+<!-- 结算模态框 -->
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer_clear" data-statu="close" wx:if="{{showModalStatus_clear}}"></view>
+<!--content-->
+<!--使用animation属性指定需要执行的动画-->
+<view animation="{{animationData}}" class="drawer_box_clear" wx:if="{{showModalStatus_clear}}">
+
+  <!--drawer content-->
+  <view class="drawer_title">请输入</view>
+  <view class="drawer_content_clear">
+    <!--drawer content-->
+    <view class="drawer_content_clear">
+      <view class="top grid">
+        <label class="title col-0">地址</label>
+        <input class="input_base input_h30 col-1" name="rName" value="如 南三219"></input>
+      </view>
+      <view class="top grid">
+        <label class="title col-0">电话</label>
+        <input class="input_base input_h30 col-1" name="mobile" value="1333333333"></input>
+      </view>
+      <view class="top grid">
+        <label class="title col-0">备注</label>
+        <input class="input_base input_h30 col-1" name="comment" value="给卖家留言"></input>
+      </view>
+      <view class="top bottom grid">
+        <view class="clear_summary col-0">
+          <view>共计￥{{cost*discounts+freightCharge}}</view>
+          <view wx:if="{{discounts < 1}}">{{discounts}}折优惠，运费{{freightCharge}}元</view>
+          <view wx:if="{{discounts == 1}}">运费{{freightCharge}}元</view>
+        </view>
+        <button class="clear_summary_bth fr col-1" name="bz">确认下单</button>
+      </view>
+    </view>
+  </view>
+  <!-- <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> -->
 </view>
