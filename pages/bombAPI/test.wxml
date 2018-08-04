@@ -1,0 +1,15 @@
+<view class="section">
+    <button size="mini" bindtap="getProducts">获取所有的商品信息</button>
+    <button size="mini" bindtap="getSchools">获取学校信息，如果有多个下单时要选学校</button>
+    <button size="mini" bindtap="createOrder">输入手机号和地址，可能选择学校下单</button>
+    <button size="mini" bindtap="checkOrders">使用手机号查看订单</button>
+    <button size="mini" bindtap="distributeOrder">指定配送员</button>
+    <button size="mini" bindtap="doneOrder">完成订单</button>
+    <button size="mini" bindtap="checkProducts">查看所有商品销售情况</button>
+    <button size="mini" bindtap="checkAmount">查看销售额盈利等</button>
+    <button size="mini" bindtap="openApp">打开app网络日志</button>
+    <button size="mini" bindtap="pageProducts">下单页面网络日志</button>
+    <button size="mini" bindtap="pageMe">我的页面网络日志</button>
+    <image class="image_frame" src="{{imageUrl}}" mode="aspectFill"> 
+</image>
+</view>
