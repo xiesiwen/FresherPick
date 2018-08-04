@@ -22,19 +22,19 @@
             <view class="inner">
               <!-- cover item -->
               <view class="cover" bindtap="powerDrawer" data-statu="open" data-category="{{indexSize}}" data-index="{{index}}">
-                <image class="cover-img" mode="scaleToFill" src="{{item.src}}"></image>
+                <image class="cover-img" mode="scaleToFill" src="{{item.image.url}}"></image>
               </view>
               <!-- description item -->
               <view class="info overflow">
                 <view class="info-title overflow">{{item.name}}</view>
-                <view class="info-desc overflow">descdescdescdesc{{item.desc?'暂无':item.desc}}</view>
+                <view class="info-desc overflow">{{item.desc?'暂无':item.desc}}</view>
                 <view class="info-price overflow">￥{{item.price}}</view>
               </view>
               <!-- <view class="add-shoppingCart">
                 <view class="text">添加</view> -->
               <view class="food-numb">
                 <view class="remove" bindtap="removeFromTrolley" hidden="{{item.numb==0}}" data-index="{{index}}">-</view>
-                <text class="text" hidden="{{item.numb==0}}">{{item.numb}}</text>
+                <text class="text" hidden="{{item.numb==0}}">{{item.numb==null?0:item.numb}}</text>
                 <view class="add" bindtap="addToTrolley" data-index="{{index}}">+</view>
               </view>
               <!-- </view> -->
@@ -69,8 +69,8 @@
   <!--drawer content-->
   <view class="drawer_title">{{modalItem.name}}</view>
   <view class="drawer_content">
-    <image class="model_image" mode="scaleToFill" src="{{modalItem.src}}"></image>
-    <view class="modal_desc">简短的描述，可以自动换行{{modalItem.desc}}简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行简短的描述，可以自动换行</view>
+    <image class="model_image" mode="scaleToFill" src="{{modalItem.image.url}}"></image>
+    <view class="modal_desc">{{modalItem.desc}}</view>
   </view>
   <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view>
 </view>
@@ -100,27 +100,34 @@
   <view class="drawer_content_clear">
     <!--drawer content-->
     <view class="drawer_content_clear">
-      <view class="top grid">
-        <label class="title col-0">地址</label>
-        <input class="input_base input_h30 col-1" name="rName" value="如 南三219"></input>
-      </view>
-      <view class="top grid">
-        <label class="title col-0">电话</label>
-        <input class="input_base input_h30 col-1" name="mobile" value="1333333333"></input>
-      </view>
-      <view class="top grid">
-        <label class="title col-0">备注</label>
-        <input class="input_base input_h30 col-1" name="comment" value="给卖家留言"></input>
-      </view>
-      <view class="top bottom grid">
-        <view class="clear_summary col-0">
-          <view>共计￥{{cost*discounts+freightCharge}}</view>
-          <view wx:if="{{discounts < 1}}">{{discounts}}折优惠，运费{{freightCharge}}元</view>
-          <view wx:if="{{discounts == 1}}">运费{{freightCharge}}元</view>
+      <form bindsubmit='submitOrder'>
+        <view class="top grid">
+          <label class="title col-0">电话</label>
+          <input class="input_base input_h30 col-1" name="mobile" placeholder="如 12345678901"></input>
         </view>
-        <button class="clear_summary_bth fr col-1" name="bz">确认下单</button>
-      </view>
+        <view class="top grid">
+          <label class="title col-0">学校</label>
+          <input class="input_base input_h30 col-1" name="university" placeholder="如 上海**学校"></input>
+        </view>
+        <view class="top grid">
+          <label class="title col-0">宿舍</label>
+          <input class="input_base input_h30 col-1" name="dorm" placeholder="如 南三219"></input>
+        </view>
+        <view class="top grid">
+          <label class="title col-0">备注</label>
+          <input class="input_base input_h30 col-1" name="comment" placeholder="给卖家留言"></input>
+        </view>
+        <view class="top bottom grid">
+          <view class="clear_summary col-0">
+            <view>共计￥{{((cost*discounts)+freightCharge)/10}}</view>
+            <view wx:if="{{discounts < 10}}">{{discounts}}折优惠，运费{{freightCharge}}元</view>
+            <view wx:if="{{discounts == 10}}">运费{{freightCharge}}元</view>
+          </view>
+          <button class="clear_summary_bth fr col-1" name="bz" form-type='submit'>确认下单</button>
+        </view>
+      </form>
     </view>
+
   </view>
   <!-- <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view> -->
 </view>

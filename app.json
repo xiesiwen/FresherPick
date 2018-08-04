@@ -1,7 +1,8 @@
 {
   "pages":[
     "pages/menu/menu",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/bombAPI/test"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -22,6 +23,10 @@
     {
       "pagePath": "pages/my/my",
       "text": "我的"
+    }
+    ,{
+      "pagePath": "pages/bombAPI/test",
+      "text": "API"
     }]
   },
   "networkTimeout": {
