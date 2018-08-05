@@ -1,6 +1,6 @@
 // var bombAPI = require('../bombAPI/test.js');
 var Bmob = require('../../utils/Bmob-1.6.2.min.js');
-Bmob.initialize("789f6711a42cb8e61a5dde589b559e69", "55e875d5e5ef1476762ad60c5baeacc6");
+Bmob.initialize("789f6711a42cb8e61a5dde589b559e69", "55e875d5e5ef1476762ad60c5baeacc6", "841b8167851edfafc48ec9a7835d33b7");
 // pages/test/test.js
 Page({
 
@@ -22,37 +22,43 @@ Page({
     modalItem: {}, //模态框显示的内容
     currentPage: 0,
     selected: 0,
-    howMuch: 12, //没有用到
     cost: 0, //购物车本次花费的钱;
+    income: 0, //购物车所有物品的收益（售价-成本）
     freightCharge: 5, //运费;是不是有数据库送
-    discounts: 9, //折扣价
+    // discounts: 9, //折扣价; 已经写入到数据库
     shoppingCart: [], //加入购物车的物品;需要记录物品的Id
     userInfos: {}, //用户的信息，包括：电话，学校 地址
     sumbitMsg: "", //订单提交的msg
   },
-  shoppingCart: [], //购物车 name/num/price
+  // shoppingCart: [], //购物车 name/num/price
 
   addToTrolley: function(e) {
     var info = this.data.menu;
     //这里是菜单的处理方法，在生产环境应该要考虑
     info[this.data.indexSize].menuContent[e.currentTarget.dataset.index].numb++;
+    var product = info[this.data.indexSize].menuContent[e.currentTarget.dataset.index];
     //点击+的同时，添加购物车
-    this.addShoppingCart(1, info[this.data.indexSize].menuContent[e.currentTarget.dataset.index]);
+    this.addShoppingCart(1, product);
     this.setData({
-      cost: this.data.cost + this.data.menu[this.data.indexSize].menuContent[e.currentTarget.dataset.index].price,
+      cost: this.data.cost + ((product.price * product.discount) /10),
+      income: this.data.income + (((product.price * product.discount) / 10) - product.originalPrice),
       menu: info,
     })
+    console.log("总价:" + this.data.cost + " 总收益:" + this.data.income);
   },
   removeFromTrolley: function(e) {
     var info = this.data.menu;
     if (info[this.data.indexSize].menuContent[e.currentTarget.dataset.index].numb != 0) {
       info[this.data.indexSize].menuContent[e.currentTarget.dataset.index].numb--;
+      var product = info[this.data.indexSize].menuContent[e.currentTarget.dataset.index];
       //点击-的同时，删除添加购物车
-      this.addShoppingCart(0, info[this.data.indexSize].menuContent[e.currentTarget.dataset.index]);
+      this.addShoppingCart(0, product);
       this.setData({
-        cost: this.data.cost - this.data.menu[this.data.indexSize].menuContent[e.currentTarget.dataset.index].price,
+        cost: this.data.cost - (product.price * product.discount) / 10,
+        income: this.data.income - (((product.price * product.discount) / 10) - product.originalPrice),
         menu: info,
       })
+      console.log("总价:" + this.data.cost + " 总收益:" + this.data.income);
     }
   },
   //加入或者删除购物车; flag=1 添加 flag=0 删除
@@ -108,29 +114,104 @@ Page({
     var result = this.checkSumbitOrder(userInfos);
     //用户输入失败
     if (result.flag == false) {
-      this.setData({
-        sumbitMsg: result.msg,
-      });
       wx.showToast({
         title: result.msg,
         icon: "none"
       })
-    }//用户输入成功，本地缓存信息 
+    } 
+    //用户输入成功，本地缓存信息；
+    //1.如果是新用户，先注册新用户信息，然后本地缓存;重新打开小程序，先读取本都缓存。
+    //2.确保用户信息在订单信息前提交
     else {
-      const that = this;
-      that.setData({
-        userInfos: userInfos,
-      });
-      wx.setStorageSync('userInfos', userInfos);
-      try {
-        var value = JSON.parse(wx.getStorageSync('userInfos'));
-        if (value) {
-          console.log("Read Local value" + value);
-        }
-      } catch (e) {
-        console.log("Read Local UserInfos Stroage Error.")
+      //要更新到数据库的值
+      var result = this.SubmitUserAndSubmitOrder(userInfos);
+      setTimeout(function () {
+        //要延时执行的代码
+      }, 1000) //延迟时间 这里是1秒
+      if (result) {
+        wx.showToast({
+          title: "订单提交成功！",
+          icon: "none"
+        })
+        const that = this;
+        that.setData({
+          userInfos: userInfos,
+        });
+        wx.setStorageSync('userInfos', userInfos);
+      } else {
+        wx.showToast({
+          title: "信息提交异常，请稍后再试！",
+          icon: "none"
+        })
       }
     }
+  },
+  SubmitUserAndSubmitOrder: function(userInfo) {
+    let params = {
+      username: userInfo.mobile,
+      uLevel: userInfo.uLevel,
+      school: userInfo.university,
+      place: userInfo.dorm,
+      password: '123456' //默认密码
+    };
+
+    const query = Bmob.Query("_User");
+    query.equalTo("username", "==", params.username);
+    query.find().then(res => {
+      //用户不存在
+      if (typeof (res.code) == "undefined" && typeof (res[0]) == "undefined"){
+        console.log("用户" + params.username + "不存在>>>");
+        Bmob.User.register(params).then(res => {
+          console.log("注册用户" + params.username + "成功");
+          return true;
+        }).catch(err => {
+          console.log("注册用户失败>>> " + err.code);
+          return false;
+        });
+      }
+      //用户存在；这里会抛出异常
+      else if (typeof(res[0].username) != "undefined"){
+        var objectId = res[0].objectId;
+        const query2 = Bmob.Query('_User');
+        query2.get(objectId).then(res => {
+          res.set('school', params.school);
+          res.set('place', params.place);
+          res.save();
+          return ture;
+        }).catch(err => {
+          console.log("更新User表没有权限>>>" + err.error)
+        })
+      }
+
+      //提交订单到数据库；需要和用户信息同步执行，所以放在这里
+      //username，Products（String{'{name:被子1,num:1, name:被子2,num:2}'}），cost, school, place
+      console.log("总价:" + this.data.cost + " 总收益:" + this.data.income);
+      console.log("购物车详情:" + this.data.shoppingCart);
+      const query_orders = Bmob.Query('Orders');
+      query_orders.set("studentId", userInfo.mobile);
+      query_orders.set("school", userInfo.university);
+      query_orders.set("place", userInfo.dorm);
+      var products = {};
+      var shoppingCart_tmp = this.data.shoppingCart;
+      for (var i = 0; i < shoppingCart_tmp.length; i++) {
+        console.log("Shopping cart : " + shoppingCart_tmp[i].name);
+        products[shoppingCart_tmp[i].name] = shoppingCart_tmp[i].numb;
+      }
+      query_orders.set("products", JSON.stringify(products));
+      query_orders.set("price", this.data.cost);
+      query_orders.set("income", this.data.income);
+      query_orders.save().then(res => {
+        console.log("提交订单成功" + res)
+      }).catch(err => {
+        console.log("提交订单失败" + err)
+      })
+    }).catch(err => {
+      console.log("更新用户信息时>>>" + err);
+      return false;
+    }).catch(err => {
+      console.log("最外层异常" + err);
+    });
+    return true;
   },
   /**
    * 检查用户的输入

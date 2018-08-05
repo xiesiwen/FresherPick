@@ -27,8 +27,11 @@
               <!-- description item -->
               <view class="info overflow">
                 <view class="info-title overflow">{{item.name}}</view>
-                <view class="info-desc overflow">{{item.desc?'暂无':item.desc}}</view>
+                <view class="info-desc overflow">{{item.desc == null?'暂无':item.desc}}</view>
                 <view class="info-price overflow">￥{{item.price}}</view>
+                <block wx:if="{{item.discount < 10}}">
+                <view class="info-price">{{item.discount}}折，现价 ￥{{(item.price * item.discount)/10}}</view>
+                </block>
               </view>
               <!-- <view class="add-shoppingCart">
                 <view class="text">添加</view> -->
@@ -83,7 +86,7 @@
     <view class="shoppingCart_inner">
       <view class="overflow">{{item.name}}</view>
       <view class="overflow">数量：{{item.numb}}</view>
-      <view class="overflow">合计：￥{{item.price * item.numb}}</view>
+      <view class="overflow">合计：￥{{((item.price * item.discount)/10) * item.numb}}</view>
     </view>
   </view>
 </view>
@@ -103,25 +106,25 @@
       <form bindsubmit='submitOrder'>
         <view class="top grid">
           <label class="title col-0">电话</label>
-          <input class="input_base input_h30 col-1" name="mobile" placeholder="如 12345678901"></input>
+          <input class="input_base input_h30 col-1" name="mobile" placeholder="如 12345678901" value='13129946233'></input>
         </view>
         <view class="top grid">
           <label class="title col-0">学校</label>
-          <input class="input_base input_h30 col-1" name="university" placeholder="如 上海**学校"></input>
+          <input class="input_base input_h30 col-1" name="university" placeholder="如 上海**学校" value='ADB'></input>
         </view>
         <view class="top grid">
           <label class="title col-0">宿舍</label>
-          <input class="input_base input_h30 col-1" name="dorm" placeholder="如 南三219"></input>
+          <input class="input_base input_h30 col-1" name="dorm" placeholder="如 南三219" value="DFDSD"></input>
         </view>
         <view class="top grid">
           <label class="title col-0">备注</label>
-          <input class="input_base input_h30 col-1" name="comment" placeholder="给卖家留言"></input>
+          <input class="input_base input_h30 col-1" name="comment" placeholder="给卖家留言" value='Nothing'></input>
         </view>
         <view class="top bottom grid">
           <view class="clear_summary col-0">
-            <view>共计￥{{((cost*discounts)+freightCharge)/10}}</view>
-            <view wx:if="{{discounts < 10}}">{{discounts}}折优惠，运费{{freightCharge}}元</view>
-            <view wx:if="{{discounts == 10}}">运费{{freightCharge}}元</view>
+            <view>共计￥{{cost + freightCharge}}</view>
+            <!-- <view wx:if="{{discounts < 10}}">{{discounts}}折优惠，运费{{freightCharge}}元</view> -->
+            <view>运费{{freightCharge}}元</view>
           </view>
           <button class="clear_summary_bth fr col-1" name="bz" form-type='submit'>确认下单</button>
         </view>
