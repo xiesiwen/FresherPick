@@ -1,12 +1,58 @@
-<view class="container">
-  <view class="header">
-    <view class="userImg"></view>
-    <view class="userName">tzc123</view>
+<scroll-view class="container" scroll-y="true">
+  <block wx:for="{{orderList}}" wx:for-item="item" wx:key="">
+    <form bindsubmit='startDistributed'>
+      <view class="orderList">
+        <view class="order-title">
+          <view class="order-title-restaurantName"> 订单编号 {{item.orderId}}</view>
+          <view class="order-title-state">{{item.distributeId?'正在派送':'等待派送'}}</view>
+        </view>
+        <view class="order-content">
+          <view class="order-content-product" wx:for="{{item.products}}" wx:for-item="product" wx:key="index">
+            <view class="order-content-product-name">{{product.name}}</view>
+            <view class="order-content-product-numb">数量 {{product.numb}}</view>
+            <view class="order-content-product-price">总价 ￥{{product.price * product.numb * product.discount / 10}}</view>
+          </view>
+        </view>
+        <view class="order-content-other">
+          <view class="order-content-other-address">
+            <view class="order-content-other-name">订单地址</view>
+            <view class="order-content-other-value">{{item.school}} {{item.place}}</view>
+          </view>
+          <view class="order-content-other-phone">
+            <view class="order-content-other-name">手机</view>
+            <view class="order-content-other-value">{{item.studentId}}</view>
+          </view>
+          <view class="order-content-other-distributeId" wx:if="{{item.distributeId}}">
+            <view class="order-content-other-name">配送员</view>
+            <view class="order-content-other-value">{{item.distributeId}}</view>
+          </view>
+          <view class="order-content-other-summary">
+            <view class="order-content-other-name">共计</view>
+            <view class="order-content-other-value">{{item.price}}</view>
+          </view>
+        </view>
+        <view class="order-footer">
+          <view class="order-footer-orderCancle" bindtap="orderCancle">取消订单</view>
+          <input type="number" class="order-footer-orderDeliveryInput" wx:if="{{userInfo.uLevel > 1 && !item.distributeId}}" placeholder="输入配送员手机号" bindconfirm="startDistributed" maxlength="11" confirm-type="done" name="distributeIdInput" />
+          <button class="order-footer-orderDelivery" wx:if="{{userInfo.uLevel > 1 && !item.distributeId}}" form-type='submit'>开始配送</button>
+        </view>
+      </view>
+    </form>
+  </block>
+</scroll-view>
+
+<!--  开始派送模态框 -->
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<!--content-->
+<!--使用animation属性指定需要执行的动画-->
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+
+  <!--drawer content-->
+  <view class="drawer_title">{{modalItem.name}}</view>
+  <view class="drawer_content">
+    <image class="model_image" mode="scaleToFill" src="{{modalItem.image.url}}"></image>
+    <view class="modal_desc">{{modalItem.desc}}</view>
   </view>
-  <view class="content">
-    <view class="coupon">美团红包</view>
-    <view class="address">我的收货地址</view>
-    <view class="tel">客服电话: 101-097-77</view>
-    <view class="signOut">退出账号</view>
-  </view>
+  <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view>
 </view>

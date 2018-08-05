@@ -1,7 +1,8 @@
 {
   "pages":[
-    "pages/menu/menu",
     "pages/my/my",
+    "pages/menu/menu",
+    
     "pages/bombAPI/test"
   ],
   "window":{

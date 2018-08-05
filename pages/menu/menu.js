@@ -9,9 +9,9 @@ Page({
    */
   data: {
     // 因为这是用 menu 来做的测试，所以最后肯定需要修改关于menu的所有js代码。在这里注明。
-    showModalStatus: false, //模态框的开关
+    showModalStatus: false, //详情模态框的开关
     showModalStatus_clear: false, //结算页面模态框开关
-    showBottomModalStatus: false,
+    showBottomModalStatus: false, //购物车页面模态框开关
     indexSize: 0, //这是当前选择的分组的index，命名有问题
     indicatorDots: false,
     autoplay: false,
@@ -197,7 +197,7 @@ Page({
         console.log("Shopping cart : " + shoppingCart_tmp[i].name);
         products[shoppingCart_tmp[i].name] = shoppingCart_tmp[i].numb;
       }
-      query_orders.set("products", JSON.stringify(products));
+      query_orders.set("products", JSON.stringify(shoppingCart_tmp));
       query_orders.set("price", this.data.cost);
       query_orders.set("income", this.data.income);
       query_orders.save().then(res => {
@@ -208,9 +208,7 @@ Page({
     }).catch(err => {
       console.log("更新用户信息时>>>" + err);
       return false;
-    }).catch(err => {
-      console.log("最外层异常" + err);
-    });
+    })
     return true;
   },
   /**
@@ -387,6 +385,10 @@ Page({
     this.util(currentStatu)
   },
   powerDrawer_clear: function(e) {
+    this.setData({
+      //关闭购物车模态框，无论是不是开启
+      showBottomModalStatus: false,
+    });
     var info = this.data;
     if (info.cost <= 0) {
       return;
@@ -395,6 +397,7 @@ Page({
       this.util_clear(currentStatu);
     }
   },
+  //购物车模态框页面的动画
   util: function(currentStatu) {
     /* 动画部分 */
     // 第1步：创建动画实例 
@@ -439,6 +442,7 @@ Page({
       });
     }
   },
+  //结算页面的模态框动画
   util_clear: function(currentStatu) {
     /* 动画部分 */
     // 第1步：创建动画实例 
