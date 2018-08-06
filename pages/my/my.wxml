@@ -4,12 +4,12 @@
       <view class="orderList">
         <view class="order-title">
           <view class="order-title-restaurantName">订单编号 {{item.orderId}}</view>
-          <view name="order_objectId" wx:if="{{true}}">{{item.objectId}}</view>
+          <input name="orderObjectId" wx:if="{{true}}" value="{{item.objectId}}"></input>
           <!-- <view name="order_objectId2" wx:if="{{userInfos.uLevel == 1}}">普通用户</view>
           <view name="order_objectId3" wx:if="{{userInfos.uLevel == 2}}">配送员</view>
           <view name="order_objectId4" wx:if="{{userInfos.uLevel == 3}}">校园代理</view>
           <view name="order_objectId5" wx:if="{{userInfos.uLevel == 5}}">后台管理</view> -->
-          <view class="order-title-state">{{item.distributorId?'正在派送':'等待派送'}}</view>
+          <view class="order-title-state">{{item.distributorId?(item.done?'订单完成':'正在派送'):'等待派送'}}</view>
         </view>
         <view class="order-content">
           <view class="order-content-product" wx:for="{{item.products}}" wx:for-item="product" wx:key="index">
@@ -41,10 +41,10 @@
           </view>
         </view>
         <view class="order-footer">
-          <view class="order-footer-orderCancle" bindtap="orderCancle" data-orderObjectId="{{item.objectId}}" >取消订单</view>
+          <view class="order-footer-orderCancle" bindtap="orderCancle" wx:if="{{!item.distributorId && !item.done}}" data-orderObjectId="{{item.objectId}}" >取消订单</view>
           <input type="number" class="order-footer-orderDeliveryInput" wx:if="{{userInfos.uLevel > 1 && !item.distributorId}}" placeholder="输入配送员手机号" bindconfirm="startDistributed" maxlength="11" confirm-type="done" name="distributorIdInput" />
-          <button class="order-footer-orderDelivery" wx:if="{{userInfos.uLevel > 1 && !item.distributorId}}" form-type='submit'>开始配送</button>
-          <button class="order-footer-orderDone" wx:if="{{userInfos.uLevel > 1 && item.distributorId}}" data-orderObjectId="{{item.objectId}}">完成订单</button>
+          <button class="order-footer-orderDelivery" wx:if="{{userInfos.uLevel > 1 && !item.distributorId && !item.done}}" form-type='submit'>开始配送</button>
+          <button class="order-footer-orderDone" wx:if="{{userInfos.uLevel > 1 && item.distributorId && !item.done}}" data-orderObjectId="{{item.objectId}}" bindtap="finishOrder">完成订单</button>
         </view>
       </view>
     </form>
