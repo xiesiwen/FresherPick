@@ -55,11 +55,11 @@
 
 <!-- footer -->
 <view class="footer {{cost!=0?'active':''}}">
-  <view class="shoppingCart">
-    <view type="default" bindtap="showModal">购物车</view>
-  </view>
   <view class="cost">￥{{cost}}</view>
-  <view class="pay" bindtap='powerDrawer_clear' data-statu="open">{{cost!=0?'去结算':'15元起送'}}</view>
+  <view class="shoppingCart">
+    <view type="default" bindtap="showModal">查看购物车</view>
+  </view>
+  <view class="pay" bindtap='powerDrawer_clear' data-statu="open">去结算</view>
 </view>
 
 <!--  物品详情模态框-->
