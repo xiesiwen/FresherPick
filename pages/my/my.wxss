@@ -153,3 +153,77 @@
 .order-footer-goToComment{
   background: #FFD161;
 }
+.kf_button{
+  background-color: rgba(255, 0, 0, 0);
+  color: rgba(254,62,98, 0.8);
+  border: 0px;
+  height: 100rpx;
+  right: 0;
+  bottom: 20rpx;
+  position: fixed;
+}
+.kf_button::after{
+  border: 0px;
+}
+.top {
+  padding-top: 8px;
+}
+
+.bottom {
+  padding-bottom: 8px;
+  color: #3cc51f;
+}
+
+.modal_title {
+  height: 30px;
+  line-height: 30px;
+  width: 160rpx;
+  text-align: center;
+  display: inline-block;
+  font: 300 28rpx/30px "microsoft yahei";
+}
+
+/* 这是详细描述的样式 */
+.modal_desc{
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font: 300 28rpx/30px "microsoft yahei";
+}
+
+.input_base {
+  border: 2rpx solid #ccc;
+  padding-left: 10rpx;
+  margin-right: 50rpx;
+}
+
+.input_h30 {
+  height: 30px;
+  line-height: 30px;
+}
+
+.input_h60 {
+  height: 60px;
+}
+
+.input_view {
+  font: 12px "microsoft yahei";
+  background: #fff;
+  color: #000;
+  line-height: 30px;
+}
+
+input {
+  font: 12px "microsoft yahei";
+  background: #fff;
+  color: #000;
+}
+
+.bright789_view_hide{ 
+ display: none; 
+} 
+.bright789_view_show{ 
+ display: block; 
+} 

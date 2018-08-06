@@ -4,10 +4,14 @@ Bmob.initialize("789f6711a42cb8e61a5dde589b559e69", "55e875d5e5ef1476762ad60c5ba
 App({
   onLaunch: function () {
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
+    this.phone = wx.getStorageSync('phone')
+    if (this.phone != null && this.phone != '') {
+      Bmob.User.login(phone, '123456').then(res => {
+        this.level = res.uLevel
+        this.school = res.school
+        this.address = res.place
+      })
+    }
     // 登录
     // wx.login({
     //   success: res => {
@@ -36,6 +40,9 @@ App({
     // })
   },
   globalData: {
-    userInfo: null
+    phone: null,
+    level:null,
+    school:null,
+    address:null
   }
 })
