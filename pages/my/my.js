@@ -79,7 +79,9 @@ Page({
       that.setData({
         showUserNameInputStatus: true
       });
-    } else {
+    } 
+    else 
+    {
       wx.stopPullDownRefresh()
       that.seeOrders(that.data.userInfos);
     }

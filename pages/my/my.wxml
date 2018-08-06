@@ -4,7 +4,7 @@
       <view class="orderList">
         <view class="order-title">
           <view class="order-title-restaurantName">订单编号 {{item.orderId}}</view>
-          <input name="orderObjectId" wx:if="{{true}}" value="{{item.objectId}}"></input>
+          <input name="orderObjectId" wx:if="{{showOrderObjectId}}" value="{{item.objectId}}"></input>
           <!-- <view name="order_objectId2" wx:if="{{userInfos.uLevel == 1}}">普通用户</view>
           <view name="order_objectId3" wx:if="{{userInfos.uLevel == 2}}">配送员</view>
           <view name="order_objectId4" wx:if="{{userInfos.uLevel == 3}}">校园代理</view>
