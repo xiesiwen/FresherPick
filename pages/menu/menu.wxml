@@ -30,7 +30,7 @@
                 <view class="info-desc overflow">{{item.desc == null?'暂无':item.desc}}</view>
                 <view class="info-price overflow">￥{{item.price}}</view>
                 <block wx:if="{{item.discount < 10}}">
-                <view class="info-price">{{item.discount}}折，现价 ￥{{(item.price * item.discount)/10}}</view>
+                  <view class="info-price">{{item.discount}}折，现价 ￥{{(item.price * item.discount)/10}}</view>
                 </block>
               </view>
               <!-- <view class="add-shoppingCart">
@@ -55,7 +55,7 @@
 
 <!-- footer -->
 <view class="footer {{cost!=0?'active':''}}">
-  <view class="cost">￥{{cost}}</view>
+  <view class="cost">总计￥{{cost}}</view>
   <view class="shoppingCart">
     <view type="default" bindtap="showModal">查看购物车</view>
   </view>
@@ -105,20 +105,26 @@
     <view class="drawer_content_clear">
       <form bindsubmit='submitOrder'>
         <view class="top grid">
-          <label class="title col-0">电话</label>
-          <input class="input_base input_h30 col-1" name="mobile" ></input>
+          <label class="title col-0">手机 </label>
+          <input class="input_base input_h30 col-1" name="mobile"></input>
+        </view>
+        <view class="top grid" >
+          <!-- <label class="title col-0">学校 </label> -->
+          <!-- <input class="input_base input_h30 col-1" name="university" placeholder="如 上海大学"></input> -->
+          <picker class="picker_school" name="schoolIndex" bindchange="bindPickerChange" value="{{schoolIndex}}" range="{{schoolArray}}">
+            <!-- <view class="picker"> -->
+              <label class="title col-0">学校 </label>
+              <label class="input_base input_h30 col-1">{{!schoolIndex?'请选择':schoolArray[schoolIndex]}}</label>
+            <!-- </view> -->
+          </picker>
         </view>
         <view class="top grid">
-          <label class="title col-0">学校</label>
-          <input class="input_base input_h30 col-1" name="university" placeholder="如 上海大学"></input>
+          <label class="title col-0">宿舍 </label>
+          <input class="input_base input_h30 col-1" name="dorm" placeholder="如 南三219"></input>
         </view>
         <view class="top grid">
-          <label class="title col-0">宿舍</label>
-          <input class="input_base input_h30 col-1" name="dorm" placeholder="如 南三219" ></input>
-        </view>
-        <view class="top grid">
-          <label class="title col-0">备注</label>
-          <input class="input_base input_h30 col-1" name="comment" placeholder="给卖家留言" ></input>
+          <label class="title col-0">备注 </label>
+          <input class="input_base input_h30 col-1" name="comment" placeholder="给卖家留言"></input>
         </view>
         <view class="top bottom grid">
           <view class="clear_summary col-0">
@@ -126,7 +132,7 @@
             <!-- <view wx:if="{{discounts < 10}}">{{discounts}}折优惠，运费{{freightCharge}}元</view> -->
             <view>运费{{freightCharge}}元</view>
           </view>
-          <button class="clear_summary_bth fr col-1" name="bz" form-type='submit'>确认下单</button>
+          <button class="fr col-1 clear_summary_bth" name="bz" form-type='submit'>确认下单</button>
         </view>
       </form>
     </view>

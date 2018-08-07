@@ -41,7 +41,7 @@
           </view>
         </view>
         <view class="order-footer">
-          <view class="order-footer-orderCancle" bindtap="orderCancle" wx:if="{{!item.distributorId && !item.done}}" data-orderObjectId="{{item.objectId}}" >取消订单</view>
+          <view class="order-footer-orderCancle" bindtap="orderCancle" wx:if="{{!item.distributorId && !item.done}}" data-orderObjectId="{{item.objectId}}" wx:if="{{false}}">取消订单</view>
           <input type="number" class="order-footer-orderDeliveryInput" wx:if="{{userInfos.uLevel > 1 && !item.distributorId}}" placeholder="输入配送员手机号" bindconfirm="startDistributed" maxlength="11" confirm-type="done" name="distributorIdInput" />
           <button class="order-footer-orderDelivery" wx:if="{{userInfos.uLevel > 1 && !item.distributorId && !item.done}}" form-type='submit'>开始配送</button>
           <button class="order-footer-orderDone" wx:if="{{userInfos.uLevel > 1 && item.distributorId && !item.done}}" data-orderObjectId="{{item.objectId}}" bindtap="finishOrder">完成订单</button>

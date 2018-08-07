@@ -80,6 +80,7 @@
   border-left: 6rpx solid #dfdfdf;
   padding-left: 25rpx;
   line-height: 55rpx;
+  padding-right: 20rpx;
 }
 
 .inner {
@@ -293,7 +294,7 @@
   z-index: 1001;
   background: #fafafa;
   margin: -150px 50rpx 0 50rpx;
-  border-radius: 3px;
+  border-radius: 10rpx;
 }
 
 .drawer_title {
@@ -308,8 +309,9 @@
 }
 
 .drawer_content_clear {
-  height: 460rpx;
+  height: 420rpx;
   overflow-y: hidden; /*超出父盒子高度可滚动*/
+  font: 500 28rpx/30px "microsoft yahei";
 }
 
 .btn_ok {
@@ -348,6 +350,18 @@
   font: 300 28rpx/30px "microsoft yahei";
 }
 
+/* .picker{
+  height: 55rpx;
+  border-left: 6rpx solid #dfdfdf;
+  line-height: 55rpx;
+}
+
+.picker_school{
+  width: 100%;
+  border: 2rpx solid #ccc;
+  border-radius: 10rpx;
+} */
+
 .input_base {
   border: 2rpx solid #ccc;
   padding-left: 10rpx;
@@ -357,6 +371,7 @@
 .input_h30 {
   height: 30px;
   line-height: 30px;
+  border-radius: 10rpx;
 }
 
 .input_h60 {
@@ -410,20 +425,21 @@ radio {
   -webkit-box-flex: 5;
   box-flex: 5;
   /* border: 2rpx solid #dad; */
-  font: 12px "microsoft yahei";
+  font: 400 30rpx "microsoft yahei";
   text-align: center;
   /* background-color: #dad; */
   /* height: 60rpx; */
 }
 
 .clear_summary_bth{
-  /* background-color: #dad; */
   -webkit-box-flex: 3;
   box-flex: 3;
-  width: 30%;
+  width: 60rpx;
   margin-right: 5%;
-  /* border: 2rpx solid #dad; */
-  /* height: 60rpx; */
+  height: 80rpx;
+  color: rgba(254,62,98, 0.8);
+  font: 400 30rpx "microsoft yahei";
+  line-height: 80rpx;
 }
 
 /* 底部的模态框 */

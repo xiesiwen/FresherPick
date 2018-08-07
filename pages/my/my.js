@@ -116,27 +116,27 @@ Page({
     const query = Bmob.Query("_User");
     query.equalTo("username", "==", usernameinput);
     query.find().then(res => {
-      //用户不存在
+      //用户不存在,提示用户，并且模态框依然显示
       if (typeof(res.code) == "undefined" && typeof(res[0]) == "undefined") {
         wx.showToast({
-          title: "您是第一次登录，当前没有订单信息",
+          title: "您还没有下单，没有订单信息",
           icon: "none"
         })
+        return ;
+        // //设置一个初始化变量，用于注册
+        // let params = {
+        //   username: usernameinput,
+        //   password: '123456' //默认密码
+        // };
 
-        //设置一个初始化变量，用于注册
-        let params = {
-          username: usernameinput,
-          password: '123456' //默认密码
-        };
-
-        console.log("用户" + params.username + "不存在,执行注册");
-        Bmob.User.register(params).then(res => {
-          console.log("注册用户" + params.username + "成功");
-          return true;
-        }).catch(err => {
-          console.log("注册用户失败>>> " + err.code);
-          return false;
-        });
+        // console.log("用户" + params.username + "不存在,执行注册");
+        // Bmob.User.register(params).then(res => {
+        //   console.log("注册用户" + params.username + "成功");
+        //   return true;
+        // }).catch(err => {
+        //   console.log("注册用户失败>>> " + err.code);
+        //   return false;
+        // });
       }
       //用户存在，查询用户信息和订单信息
       else if (typeof(res[0].username) != "undefined") {
@@ -152,8 +152,15 @@ Page({
         wx.setStorageSync('userInfos', userInfos_param);
         
         that.seeOrders(that.data.userInfos);
+        if (that.orderList.length == 0){
+          wx.showToast({
+            title: "没有订单信息",
+            icon: "none"
+          })
+        }else{
         //刷新订单
         wx.startPullDownRefresh()
+        }
       }
     })
   },

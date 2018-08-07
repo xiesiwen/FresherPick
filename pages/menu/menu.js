@@ -29,6 +29,7 @@ Page({
     shoppingCart: [], //加入购物车的物品;需要记录物品的Id
     userInfos: {}, //用户的信息，包括：电话，学校 地址
     sumbitMsg: "", //订单提交的msg
+    schoolArray: [],
   },
   // shoppingCart: [], //购物车 name/num/price
 
@@ -100,14 +101,14 @@ Page({
     //手机号
     var mobile = e.detail.value.mobile;
     //大学
-    var university = e.detail.value.university;
+    var schoolIndex = e.detail.value.schoolIndex;
     //宿舍
     var dorm = e.detail.value.dorm;
     //备注
     var comment = e.detail.value.comment;
     var userInfos = {};
     userInfos["mobile"] = mobile;
-    userInfos["university"] = university;
+    userInfos["university"] = this.data.schoolArray[schoolIndex];
     userInfos["dorm"] = dorm;
     //用户等级，注册用户只能是1
     userInfos["uLevel"] = 1;
@@ -124,7 +125,7 @@ Page({
     //2.确保用户信息在订单信息前提交
     else {
       //要更新到数据库的值
-      var result = this.SubmitUserAndSubmitOrder(userInfos);
+      var result = this.SubmitUserAndSubmitOrder(userInfos, comment);
       setTimeout(function () {
         //要延时执行的代码
       }, 1000) //延迟时间 这里是1秒
@@ -138,6 +139,9 @@ Page({
           userInfos: userInfos,
         });
         wx.setStorageSync('userInfos', userInfos);
+        that.setData({
+          showModalStatus_clear: false
+        });
       } else {
         wx.showToast({
           title: "信息提交异常，请稍后再试！",
@@ -146,7 +150,8 @@ Page({
       }
     }
   },
-  SubmitUserAndSubmitOrder: function(userInfo) {
+  SubmitUserAndSubmitOrder: function(userInfo, orderComment) {
+    var that = this;
     let params = {
       username: userInfo.mobile,
       uLevel: userInfo.uLevel,
@@ -185,21 +190,24 @@ Page({
 
       //提交订单到数据库；需要和用户信息同步执行，所以放在这里
       //username，Products（String{'{name:被子1,num:1, name:被子2,num:2}'}），cost, school, place
-      console.log("总价:" + this.data.cost + " 总收益:" + this.data.income);
-      console.log("购物车详情:" + this.data.shoppingCart);
+      console.log("总价:" + that.data.cost + " 总收益:" + that.data.income);
+      console.log("购物车详情:" + that.data.shoppingCart);
       const query_orders = Bmob.Query('Orders');
       query_orders.set("studentId", userInfo.mobile);
       query_orders.set("school", userInfo.university);
       query_orders.set("place", userInfo.dorm);
+      query_orders.set("comment", orderComment);
+      //把Products转换为JSON字符串
       var products = {};
-      var shoppingCart_tmp = this.data.shoppingCart;
+      var shoppingCart_tmp = that.data.shoppingCart;
       for (var i = 0; i < shoppingCart_tmp.length; i++) {
         console.log("Shopping cart : " + shoppingCart_tmp[i].name);
         products[shoppingCart_tmp[i].name] = shoppingCart_tmp[i].numb;
       }
       query_orders.set("products", JSON.stringify(shoppingCart_tmp));
-      query_orders.set("price", this.data.cost);
-      query_orders.set("income", this.data.income);
+
+      query_orders.set("price", that.data.cost);
+      query_orders.set("income", that.data.income);
       query_orders.set("done", false);
       query_orders.set("distributorId", "");
       query_orders.save().then(res => {
@@ -264,6 +272,20 @@ Page({
     } catch (e) {
       console.log("Read Local UserInfos Stroage Error.")
     }
+    //读取School信息
+    const schoolQuery = Bmob.Query("School")
+    schoolQuery.find().then(res => {
+      console.log("读取到" + res.length + "所学校")
+      var schoolArrayTmp = []
+      for (var i in res){
+        schoolArrayTmp.push(res[i].name)
+      }
+      that.setData({
+        schoolArray: schoolArrayTmp,
+      })
+    }).catch(err => {
+      console.log("读取表School错误")
+    });
     //读取“Products"表
     const query = Bmob.Query('Products');
     query.find().then(res => {
@@ -273,7 +295,7 @@ Page({
         menu: data
       })
     }).catch(err => {
-      console.log(err)
+      console.log("读取表Products错误")
     });
     console.log("Load Products>>>" + this.data.menu);
   },
@@ -535,5 +557,11 @@ Page({
         showBottomModalStatus: false
       })
     }.bind(this), 200)
-  }
+  },
+  bindPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      schoolIndex: e.detail.value
+    })
+  },
 })
