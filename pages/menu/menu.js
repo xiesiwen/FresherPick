@@ -200,6 +200,8 @@ Page({
       query_orders.set("products", JSON.stringify(shoppingCart_tmp));
       query_orders.set("price", this.data.cost);
       query_orders.set("income", this.data.income);
+      query_orders.set("done", false);
+      query_orders.set("distributorId", "");
       query_orders.save().then(res => {
         console.log("提交订单成功" + res)
       }).catch(err => {

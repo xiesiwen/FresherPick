@@ -106,19 +106,19 @@
       <form bindsubmit='submitOrder'>
         <view class="top grid">
           <label class="title col-0">电话</label>
-          <input class="input_base input_h30 col-1" name="mobile" placeholder="如 12345678901" value='13129946233'></input>
+          <input class="input_base input_h30 col-1" name="mobile" ></input>
         </view>
         <view class="top grid">
           <label class="title col-0">学校</label>
-          <input class="input_base input_h30 col-1" name="university" placeholder="如 上海**学校" value='ADB'></input>
+          <input class="input_base input_h30 col-1" name="university" placeholder="如 上海大学"></input>
         </view>
         <view class="top grid">
           <label class="title col-0">宿舍</label>
-          <input class="input_base input_h30 col-1" name="dorm" placeholder="如 南三219" value="DFDSD"></input>
+          <input class="input_base input_h30 col-1" name="dorm" placeholder="如 南三219" ></input>
         </view>
         <view class="top grid">
           <label class="title col-0">备注</label>
-          <input class="input_base input_h30 col-1" name="comment" placeholder="给卖家留言" value='Nothing'></input>
+          <input class="input_base input_h30 col-1" name="comment" placeholder="给卖家留言" ></input>
         </view>
         <view class="top bottom grid">
           <view class="clear_summary col-0">

@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/my/my",
-    "pages/menu/menu"
+    "pages/menu/menu",
+    "pages/my/my"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -17,10 +17,14 @@
     "borderStyle": "black",
     "list":[{
       "pagePath": "pages/menu/menu",
+      "iconPath": "image/pro.png",
+      "selectedIconPath": "image/pro.png",
       "text": "下单"
     },
     {
       "pagePath": "pages/my/my",
+      "iconPath": "image/pro.png",
+      "selectedIconPath": "image/pro.png",
       "text": "我的"
     }]
   },
