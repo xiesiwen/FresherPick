@@ -68,18 +68,19 @@ Page({
    */
   onShow: function () {
     var phone = getApp().globalData.phone
-    if (phone != userInfo.moboile) {
-      var lp = {
-        "moboile": phone,
-        "university": getApp().globalData.school,
-        "dorm": getApp().globalData.address,
-        "uLevel": getApp().globalData.level
-      }
-      this.setData({
-        userInfo: lp
-      })
-      this.checkOrders()
-    }
+    // if (phone != userInfo.moboile) {
+    //   var lp = {
+    //     "moboile": phone,
+    //     "university": getApp().globalData.school,
+    //     "dorm": getApp().globalData.address,
+    //     "uLevel": getApp().globalData.level
+    //   }
+    //   this.setData({
+    //     userInfo: lp
+    //   })
+    //   this.checkOrders()
+    // }
+    phone = "13129946233"
   },
 
   /**
