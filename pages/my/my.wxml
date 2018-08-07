@@ -3,8 +3,13 @@
     <form bindsubmit='startDistributed'>
       <view class="orderList">
         <view class="order-title">
-          <view class="order-title-restaurantName"> 订单编号 {{item.orderId}}</view>
-          <view class="order-title-state">{{item.distributeId?'正在派送':'等待派送'}}</view>
+          <view class="order-title-restaurantName">订单编号 {{item.orderId}}</view>
+          <input name="orderObjectId" wx:if="{{showOrderObjectId}}" value="{{item.objectId}}"></input>
+          <!-- <view name="order_objectId2" wx:if="{{userInfos.uLevel == 1}}">普通用户</view>
+          <view name="order_objectId3" wx:if="{{userInfos.uLevel == 2}}">配送员</view>
+          <view name="order_objectId4" wx:if="{{userInfos.uLevel == 3}}">校园代理</view>
+          <view name="order_objectId5" wx:if="{{userInfos.uLevel == 5}}">后台管理</view> -->
+          <view class="order-title-state">{{item.distributorId?(item.done?'订单完成':'正在派送'):'等待派送'}}</view>
         </view>
         <view class="order-content">
           <view class="order-content-product" wx:for="{{item.products}}" wx:for-item="product" wx:key="index">
@@ -22,37 +27,43 @@
             <view class="order-content-other-name">手机</view>
             <view class="order-content-other-value">{{item.studentId}}</view>
           </view>
-          <view class="order-content-other-distributeId" wx:if="{{item.distributeId}}">
+          <view class="order-content-other-distributorId" wx:if="{{item.distributorId}}">
             <view class="order-content-other-name">配送员</view>
-            <view class="order-content-other-value">{{item.distributeId}}</view>
+            <view class="order-content-other-value">{{item.distributorId}}</view>
           </view>
           <view class="order-content-other-summary">
             <view class="order-content-other-name">共计</view>
             <view class="order-content-other-value">{{item.price}}</view>
           </view>
+          <view class="order-content-other-createAt">
+            <view class="order-content-other-name">创建时间</view>
+            <view class="order-content-other-value">{{item.createdAt}}</view>
+          </view>
         </view>
         <view class="order-footer">
-          <view class="order-footer-orderCancle" bindtap="orderCancle">取消订单</view>
-          <input type="number" class="order-footer-orderDeliveryInput" wx:if="{{userInfo.uLevel > 1 && !item.distributeId}}" placeholder="输入配送员手机号" bindconfirm="startDistributed" maxlength="11" confirm-type="done" name="distributeIdInput" />
-          <button class="order-footer-orderDelivery" wx:if="{{userInfo.uLevel > 1 && !item.distributeId}}" form-type='submit'>开始配送</button>
+          <view class="order-footer-orderCancle" bindtap="orderCancle" wx:if="{{!item.distributorId && !item.done}}" data-orderObjectId="{{item.objectId}}" >取消订单</view>
+          <input type="number" class="order-footer-orderDeliveryInput" wx:if="{{userInfos.uLevel > 1 && !item.distributorId}}" placeholder="输入配送员手机号" bindconfirm="startDistributed" maxlength="11" confirm-type="done" name="distributorIdInput" />
+          <button class="order-footer-orderDelivery" wx:if="{{userInfos.uLevel > 1 && !item.distributorId && !item.done}}" form-type='submit'>开始配送</button>
+          <button class="order-footer-orderDone" wx:if="{{userInfos.uLevel > 1 && item.distributorId && !item.done}}" data-orderObjectId="{{item.objectId}}" bindtap="finishOrder">完成订单</button>
         </view>
       </view>
     </form>
   </block>
 </scroll-view>
 
-<!--  开始派送模态框 -->
+<!--  输入电话号码 -->
 <!--mask-->
-<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<view class="drawer_screen" data-statu="close" wx:if="{{showUserNameInputStatus}}"></view>
 <!--content-->
 <!--使用animation属性指定需要执行的动画-->
-<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showUserNameInputStatus}}">
 
   <!--drawer content-->
-  <view class="drawer_title">{{modalItem.name}}</view>
-  <view class="drawer_content">
-    <image class="model_image" mode="scaleToFill" src="{{modalItem.image.url}}"></image>
-    <view class="modal_desc">{{modalItem.desc}}</view>
-  </view>
-  <view class="btn_ok" bindtap="powerDrawer" data-statu="close">确定</view>
+  <view class="drawer_title">请输入电话号码以查看订单</view>
+  <form bindsubmit="submitUsernameInput">
+    <view class="drawer_content">
+      <input type="number" class="drawer_content_input" placeholder="请输入手机号" bindconfirm="startDistributed" maxlength="11" confirm-type="done" name="usernameInput" />
+      <button class="drawer_content_sumbit" form-type='submit'>确认</button>
+    </view>
+  </form>
 </view>
