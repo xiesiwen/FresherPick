@@ -190,7 +190,7 @@ Page({
 
       //提交订单到数据库；需要和用户信息同步执行，所以放在这里
       //username，Products（String{'{name:被子1,num:1, name:被子2,num:2}'}），cost, school, place
-      console.log("总价:" + that.data.cost + " 总收益:" + that.data.income);
+      console.log("总价:" + that.data.cost + " 总收益:" + that.data.income + "运费:" + that.data.freightCharge);
       console.log("购物车详情:" + that.data.shoppingCart);
       const query_orders = Bmob.Query('Orders');
       query_orders.set("studentId", userInfo.mobile);
@@ -206,7 +206,7 @@ Page({
       }
       query_orders.set("products", JSON.stringify(shoppingCart_tmp));
 
-      query_orders.set("price", that.data.cost);
+      query_orders.set("price", that.data.cost + that.data.freightCharge);
       query_orders.set("income", that.data.income);
       query_orders.set("done", false);
       query_orders.set("distributorId", "");
